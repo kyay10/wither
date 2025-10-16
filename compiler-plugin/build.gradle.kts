@@ -105,6 +105,11 @@ fun Test.setLibraryProperty(propName: String, jarName: String) {
   systemProperty(propName, path)
 }
 
+java {
+  withSourcesJar()
+  withJavadocJar()
+}
+
 publishing {
   publications {
     create<MavenPublication>("maven") {

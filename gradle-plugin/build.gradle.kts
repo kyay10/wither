@@ -3,6 +3,7 @@ plugins {
   id("com.github.gmazzo.buildconfig")
   id("java-gradle-plugin")
   id("com.gradle.plugin-publish")
+  id("module.publication")
 }
 
 sourceSets {
@@ -49,6 +50,7 @@ gradlePlugin {
       displayName = "Wither"
       description =
         "A Kotlin Compiler Plugin that allows local `with` calls, so that adding receivers doesn't result in deeply nested code. This is especially important with context parameters."
+      tags = listOf("kotlin-compiler-plugin")
       implementationClass = "io.github.kyay10.wither.WitherGradlePlugin"
     }
   }
