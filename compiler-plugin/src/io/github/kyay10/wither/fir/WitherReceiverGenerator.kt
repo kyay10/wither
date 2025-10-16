@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.fir.moduleData
 import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.resolve.calls.ImplicitExtensionReceiverValue
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
+import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirReceiverParameterSymbol
@@ -35,6 +36,12 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
     functionCall: FirFunctionCall,
     sessionHolder: SessionAndScopeSessionHolder,
     containingCallableSymbol: FirCallableSymbol<*>
+  ) = addNewImplicitReceivers(functionCall, sessionHolder, containingCallableSymbol as FirBasedSymbol<*>)
+
+  fun addNewImplicitReceivers(
+    functionCall: FirFunctionCall,
+    sessionHolder: SessionAndScopeSessionHolder,
+    containingCallableSymbol: FirBasedSymbol<*>
   ): List<ImplicitExtensionReceiverValue> {
     if (functionCall.calleeReference.resolved?.resolvedSymbol == withSymbol) {
       val vararg = functionCall.argument as? FirVarargArgumentsExpression ?: return emptyList()
