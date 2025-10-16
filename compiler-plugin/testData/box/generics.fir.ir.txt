@@ -1,0 +1,15 @@
+FILE fqName:<root> fileName:/generics.kt
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.String [val]
+        CONST String type=kotlin.String value="OK"
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+        CALL 'public final fun getString <T> (x: T of <root>.getString): T of <root>.getString declared in <root>' type=kotlin.String origin=null
+          TYPE_ARG T: kotlin.String
+          ARG x: GET_VAR 'val tmp_0: kotlin.String declared in <root>.box' type=kotlin.String origin=null
+  FUN name:getString visibility:public modality:FINAL returnType:T of <root>.getString
+    TYPE_PARAMETER name:T index:0 variance: superTypes:[kotlin.String] reified:false
+    VALUE_PARAMETER kind:Context name:x index:0 type:T of <root>.getString
+    BLOCK_BODY
+      RETURN type=kotlin.Nothing from='public final fun getString <T> (x: T of <root>.getString): T of <root>.getString declared in <root>'
+        GET_VAR 'x: T of <root>.getString declared in <root>.getString' type=T of <root>.getString origin=null

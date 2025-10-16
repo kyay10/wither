@@ -1,0 +1,8 @@
+FILE: nestedFunctions3.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/with|(vararg(String(Fail), Int(42)))
+        R|kotlin/with|<R|kotlin/String|, R|kotlin/Nothing|>(String(OK), <L> = with@fun R|kotlin/String|.<anonymous>(): R|kotlin/Nothing| <inline=Inline, kind=EXACTLY_ONCE>  {
+            ^box context(this@R|special/anonymous|) R|kotlin/contextOf|<R|kotlin/String|>()
+        }
+        )
+    }

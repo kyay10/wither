@@ -1,0 +1,11 @@
+FILE fqName:<root> fileName:/subtype.kt
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.String [val]
+        CONST String type=kotlin.String value="OK"
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+        CALL 'public open fun toString (): kotlin.String declared in kotlin.CharSequence' type=kotlin.String origin=null
+          ARG <this>: TYPE_OP type=kotlin.Any origin=IMPLICIT_CAST typeOperand=kotlin.Any
+            CALL 'public final fun contextOf <A> (context: @[NoInfer] A of kotlin.contextOf): @[NoInfer] A of kotlin.contextOf declared in kotlin' type=@[NoInfer] kotlin.CharSequence origin=null
+              TYPE_ARG A: kotlin.CharSequence
+              ARG context: GET_VAR 'val tmp_0: kotlin.String declared in <root>.box' type=kotlin.String origin=null

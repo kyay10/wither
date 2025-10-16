@@ -1,0 +1,10 @@
+FILE: conditionals.kt
+    public final fun box(): R|kotlin/String| {
+        when () {
+            Boolean(false) ->  {
+                R|io/github/kyay10/wither/with|(vararg(String(OK), Int(42)))
+            }
+        }
+
+        ^box R|kotlin/contextOf<Inapplicable(INAPPLICABLE): kotlin/contextOf>#|<R|kotlin/String|>()
+    }

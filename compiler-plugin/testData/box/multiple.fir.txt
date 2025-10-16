@@ -1,0 +1,5 @@
+FILE: multiple.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/with|(vararg(String(OK), Int(42)))
+        ^box context(this@R|<local>/<with receiver holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+    }

@@ -1,0 +1,22 @@
+FILE: smartcast.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/with|(vararg((String(OK) as R|kotlin/Any|)))
+        context(this@R|<local>/<with receiver holder>|) R|/smartCastContext|()
+        ^box context(this@R|<local>/<with receiver holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+    }
+    context(x: R|kotlin/Any|)
+    @R|kotlin/OptIn|(markerClass = vararg(<getClass>(Q|kotlin/contracts/ExperimentalContracts|))) public final fun smartCastContext(): R|kotlin/Unit|
+        [R|Contract description]
+         <
+            Returns(WILDCARD) -> x is kotlin/String
+        >
+     {
+         {
+            R|kotlin/contracts/contract|(<L> = contract@fun R|kotlin/contracts/ContractBuilder|.<anonymous>(): R|kotlin/Unit| <inline=Inline, kind=UNKNOWN>  {
+                this@R|special/anonymous|.R|kotlin/contracts/ContractBuilder.returns|().R|kotlin/contracts/SimpleEffect.implies|((R|<local>/x| is R|kotlin/String|))
+            }
+            )
+        }
+
+        (R|<local>/x| as R|kotlin/String|)
+    }

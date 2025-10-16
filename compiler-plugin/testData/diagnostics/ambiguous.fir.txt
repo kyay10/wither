@@ -1,0 +1,5 @@
+FILE: ambiguous.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/with|(vararg(String(Fail2), Int(42), String(OK)))
+        ^box R|kotlin/contextOf<Inapplicable(INAPPLICABLE): kotlin/contextOf>#|<R|kotlin/String|>()
+    }

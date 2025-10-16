@@ -1,0 +1,13 @@
+FILE: conditionals.kt
+    public final fun box(): R|kotlin/String| {
+        when () {
+            Boolean(true) ->  {
+                R|io/github/kyay10/wither/with|(vararg(String(OK), Int(42)))
+                ^box context(this@R|<local>/<with receiver holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+            }
+            else ->  {
+                R|kotlin/error|(String(inaccessible))
+            }
+        }
+
+    }
