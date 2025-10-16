@@ -19,4 +19,64 @@ public class JvmBoxTestGenerated extends AbstractJvmBoxTest {
   public void testAllFilesPresentInBox() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler-plugin/testData/box"), Pattern.compile("^(.+)\\.kt$"), null, true);
   }
+
+  @Test
+  @TestMetadata("conditionals.kt")
+  public void testConditionals() {
+    runTest("compiler-plugin/testData/box/conditionals.kt");
+  }
+
+  @Test
+  @TestMetadata("generics.kt")
+  public void testGenerics() {
+    runTest("compiler-plugin/testData/box/generics.kt");
+  }
+
+  @Test
+  @TestMetadata("multiple.kt")
+  public void testMultiple() {
+    runTest("compiler-plugin/testData/box/multiple.kt");
+  }
+
+  @Test
+  @TestMetadata("multiple2.kt")
+  public void testMultiple2() {
+    runTest("compiler-plugin/testData/box/multiple2.kt");
+  }
+
+  @Test
+  @TestMetadata("nestedFunctions.kt")
+  public void testNestedFunctions() {
+    runTest("compiler-plugin/testData/box/nestedFunctions.kt");
+  }
+
+  @Test
+  @TestMetadata("nestedFunctions2.kt")
+  public void testNestedFunctions2() {
+    runTest("compiler-plugin/testData/box/nestedFunctions2.kt");
+  }
+
+  @Test
+  @TestMetadata("nestedFunctions3.kt")
+  public void testNestedFunctions3() {
+    runTest("compiler-plugin/testData/box/nestedFunctions3.kt");
+  }
+
+  @Test
+  @TestMetadata("simple.kt")
+  public void testSimple() {
+    runTest("compiler-plugin/testData/box/simple.kt");
+  }
+
+  @Test
+  @TestMetadata("smartcast.kt")
+  public void testSmartcast() {
+    runTest("compiler-plugin/testData/box/smartcast.kt");
+  }
+
+  @Test
+  @TestMetadata("subtype.kt")
+  public void testSubtype() {
+    runTest("compiler-plugin/testData/box/subtype.kt");
+  }
 }

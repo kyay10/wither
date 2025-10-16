@@ -19,4 +19,16 @@ public class JvmDiagnosticTestGenerated extends AbstractJvmDiagnosticTest {
   public void testAllFilesPresentInDiagnostics() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler-plugin/testData/diagnostics"), Pattern.compile("^(.+)\\.kt$"), null, true);
   }
+
+  @Test
+  @TestMetadata("ambiguous.kt")
+  public void testAmbiguous() {
+    runTest("compiler-plugin/testData/diagnostics/ambiguous.kt");
+  }
+
+  @Test
+  @TestMetadata("conditionals.kt")
+  public void testConditionals() {
+    runTest("compiler-plugin/testData/diagnostics/conditionals.kt");
+  }
 }

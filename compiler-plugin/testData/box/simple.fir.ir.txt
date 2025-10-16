@@ -1,0 +1,9 @@
+FILE fqName:<root> fileName:/simple.kt
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.String [val]
+        CONST String type=kotlin.String value="OK"
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+        CALL 'public final fun contextOf <A> (context: @[NoInfer] A of kotlin.contextOf): @[NoInfer] A of kotlin.contextOf declared in kotlin' type=@[NoInfer] kotlin.String origin=null
+          TYPE_ARG A: kotlin.String
+          ARG context: GET_VAR 'val tmp_0: kotlin.String declared in <root>.box' type=kotlin.String origin=null
