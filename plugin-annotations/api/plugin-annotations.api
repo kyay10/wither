@@ -1,4 +1,4 @@
-public final class io/github/kyay10/wither/SomeAnnotationKt {
+public final class io/github/kyay10/wither/WithKt {
 	public static final fun with ([Ljava/lang/Object;)V
 }
 
