@@ -3,46 +3,48 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.kotlinx.binary-compatibility-validator")
+  kotlin("multiplatform")
+  id("module.publication")
+  id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 kotlin {
-    explicitApi()
+  explicitApi()
 
-    androidNativeArm32()
-    androidNativeArm64()
-    androidNativeX64()
-    androidNativeX86()
+  androidNativeArm32()
+  androidNativeArm64()
+  androidNativeX64()
+  androidNativeX86()
 
-    iosArm64()
-    iosSimulatorArm64()
-    iosX64()
+  iosArm64()
+  iosSimulatorArm64()
+  iosX64()
 
-    js().nodejs()
+  js().nodejs()
 
-    jvm()
+  jvmToolchain(8)
+  jvm()
 
-    linuxArm64()
-    linuxX64()
+  linuxArm64()
+  linuxX64()
 
-    macosArm64()
-    macosX64()
+  macosArm64()
+  macosX64()
 
-    mingwX64()
+  mingwX64()
 
-    tvosArm64()
-    tvosSimulatorArm64()
-    tvosX64()
+  tvosArm64()
+  tvosSimulatorArm64()
+  tvosX64()
 
-    wasmJs().nodejs()
-    wasmWasi().nodejs()
+  wasmJs().nodejs()
+  wasmWasi().nodejs()
 
-    watchosArm32()
-    watchosArm64()
-    watchosDeviceArm64()
-    watchosSimulatorArm64()
-    watchosX64()
+  watchosArm32()
+  watchosArm64()
+  watchosDeviceArm64()
+  watchosSimulatorArm64()
+  watchosX64()
 
-    applyDefaultHierarchyTemplate()
+  applyDefaultHierarchyTemplate()
 }
