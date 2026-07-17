@@ -5,7 +5,7 @@ FILE: smartcast.kt
         ^box context(this@R|<local>/<with receiver holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
     }
     context(x: R|kotlin/Any|)
-    @R|kotlin/OptIn|(markerClass = vararg(<getClass>(Q|kotlin/contracts/ExperimentalContracts|))) public final fun smartCastContext(): R|kotlin/Unit|
+    @R|kotlin/OptIn|(markerClass = vararg(<getClass>(Q|kotlin/contracts/ExperimentalContracts|)) [evaluated = vararg(<getClass>(Q|kotlin/contracts/ExperimentalContracts|))]) public final fun smartCastContext(): R|kotlin/Unit|
         [R|Contract description]
          <
             Returns(WILDCARD) -> x is kotlin/String

@@ -4,7 +4,7 @@ FILE fqName:<root> fileName:/conditionals.kt
       WHEN type=kotlin.Nothing origin=IF
         BRANCH
           if: CONST Boolean type=kotlin.Boolean value=true
-          then: BLOCK type=kotlin.Unit origin=null
+          then: BLOCK type=kotlin.Nothing origin=null
             VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.String [val]
               CONST String type=kotlin.String value="OK"
             VAR IR_TEMPORARY_VARIABLE name:tmp_1 type:kotlin.Int [val]

@@ -15,6 +15,10 @@ import java.util.regex.Pattern;
 @TestMetadata("compiler-plugin/testData/box")
 @TestDataPath("$PROJECT_ROOT")
 public class JvmBoxTestGenerated extends AbstractJvmBoxTest {
+  private void run(String fileName) {
+    runTest("compiler-plugin/testData/box/" + fileName);
+  }
+
   @Test
   public void testAllFilesPresentInBox() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("compiler-plugin/testData/box"), Pattern.compile("^(.+)\\.kt$"), null, true);
@@ -23,60 +27,60 @@ public class JvmBoxTestGenerated extends AbstractJvmBoxTest {
   @Test
   @TestMetadata("conditionals.kt")
   public void testConditionals() {
-    runTest("compiler-plugin/testData/box/conditionals.kt");
+    run("conditionals.kt");
   }
 
   @Test
   @TestMetadata("generics.kt")
   public void testGenerics() {
-    runTest("compiler-plugin/testData/box/generics.kt");
+    run("generics.kt");
   }
 
   @Test
   @TestMetadata("multiple.kt")
   public void testMultiple() {
-    runTest("compiler-plugin/testData/box/multiple.kt");
+    run("multiple.kt");
   }
 
   @Test
   @TestMetadata("multiple2.kt")
   public void testMultiple2() {
-    runTest("compiler-plugin/testData/box/multiple2.kt");
+    run("multiple2.kt");
   }
 
   @Test
   @TestMetadata("nestedFunctions.kt")
   public void testNestedFunctions() {
-    runTest("compiler-plugin/testData/box/nestedFunctions.kt");
+    run("nestedFunctions.kt");
   }
 
   @Test
   @TestMetadata("nestedFunctions2.kt")
   public void testNestedFunctions2() {
-    runTest("compiler-plugin/testData/box/nestedFunctions2.kt");
+    run("nestedFunctions2.kt");
   }
 
   @Test
   @TestMetadata("nestedFunctions3.kt")
   public void testNestedFunctions3() {
-    runTest("compiler-plugin/testData/box/nestedFunctions3.kt");
+    run("nestedFunctions3.kt");
   }
 
   @Test
   @TestMetadata("simple.kt")
   public void testSimple() {
-    runTest("compiler-plugin/testData/box/simple.kt");
+    run("simple.kt");
   }
 
   @Test
   @TestMetadata("smartcast.kt")
   public void testSmartcast() {
-    runTest("compiler-plugin/testData/box/smartcast.kt");
+    run("smartcast.kt");
   }
 
   @Test
   @TestMetadata("subtype.kt")
   public void testSubtype() {
-    runTest("compiler-plugin/testData/box/subtype.kt");
+    run("subtype.kt");
   }
 }

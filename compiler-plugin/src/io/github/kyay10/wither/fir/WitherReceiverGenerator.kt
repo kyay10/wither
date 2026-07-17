@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.fir.references.resolved
 import org.jetbrains.kotlin.fir.resolve.calls.ImplicitExtensionReceiverValue
 import org.jetbrains.kotlin.fir.resolve.providers.symbolProvider
 import org.jetbrains.kotlin.fir.symbols.FirBasedSymbol
-import org.jetbrains.kotlin.fir.symbols.impl.FirCallableSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirFunctionSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirReceiverParameterSymbol
 import org.jetbrains.kotlin.fir.symbols.impl.FirValueParameterSymbol
@@ -35,13 +34,7 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
   override fun addNewImplicitReceivers(
     functionCall: FirFunctionCall,
     sessionHolder: SessionAndScopeSessionHolder,
-    containingCallableSymbol: FirCallableSymbol<*>
-  ) = addNewImplicitReceivers(functionCall, sessionHolder, containingCallableSymbol as FirBasedSymbol<*>)
-
-  fun addNewImplicitReceivers(
-    functionCall: FirFunctionCall,
-    sessionHolder: SessionAndScopeSessionHolder,
-    containingCallableSymbol: FirBasedSymbol<*>
+    containingCallableSymbol: FirBasedSymbol<*>,
   ): List<ImplicitExtensionReceiverValue> {
     if (functionCall.calleeReference.resolved?.resolvedSymbol == withSymbol) {
       val vararg = functionCall.argument as? FirVarargArgumentsExpression ?: return emptyList()
@@ -71,7 +64,7 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
           receiverParameter.symbol,
           type,
           sessionHolder.session,
-          sessionHolder.scopeSession
+          sessionHolder.scopeSession,
         )
       }
     }
@@ -81,7 +74,8 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
   data object GeneratedReceiverFromWithKey : GeneratedDeclarationKey()
 
   private val withSymbol by lazy {
-    session.symbolProvider.getTopLevelCallableSymbols(WITH_CALLABLE_ID.packageName, WITH_CALLABLE_ID.callableName)
+    session.symbolProvider
+      .getTopLevelCallableSymbols(WITH_CALLABLE_ID.packageName, WITH_CALLABLE_ID.callableName)
       .firstIsInstance<FirFunctionSymbol<*>>()
   }
 }
