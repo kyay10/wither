@@ -1,4 +1,4 @@
 allprojects {
   group = "io.github.kyay10.wither"
-  version = "0.0.2"
+  version = "0.0.3"
 }
