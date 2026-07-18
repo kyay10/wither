@@ -1,10 +1,7 @@
-// LANGUAGE: +ContextParameters
-
 import kotlin.contracts.*
-import io.github.kyay10.wither.*
 
 fun box(): String {
-  with("OK" as Any)
+  defaultWither("OK" as Any)
   smartCastContext()
   return contextOf<String>()
 }

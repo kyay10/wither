@@ -2,16 +2,19 @@ package io.github.kyay10.wither.runners
 
 import io.github.kyay10.wither.services.ExtensionRegistrarConfigurator
 import io.github.kyay10.wither.services.PluginAnnotationsProvider
+import io.github.kyay10.wither.services.WitherImportsPreprocessor
 import org.jetbrains.kotlin.test.FirParser
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.CodegenTestDirectives
 import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives
+import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.DISABLE_FIR_DUMP_HANDLER
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives
 import org.jetbrains.kotlin.test.runners.codegen.AbstractFirBlackBoxCodegenTestBase
 import org.jetbrains.kotlin.test.services.EnvironmentBasedStandardLibrariesPathProvider
 import org.jetbrains.kotlin.test.services.KotlinStandardLibrariesPathProvider
+import org.jetbrains.kotlin.utils.bind
 
-open class AbstractJvmBoxTest : AbstractFirBlackBoxCodegenTestBase(FirParser.LightTree) {
+open class WitherJvmBoxTest : AbstractFirBlackBoxCodegenTestBase(FirParser.LightTree) {
   override fun createKotlinStandardLibrariesPathProvider(): KotlinStandardLibrariesPathProvider {
     return EnvironmentBasedStandardLibrariesPathProvider
   }
@@ -44,5 +47,20 @@ open class AbstractJvmBoxTest : AbstractFirBlackBoxCodegenTestBase(FirParser.Lig
         ::ExtensionRegistrarConfigurator
       )
     }
+  }
+}
+
+open class AbstractWithJvmBoxTest: WitherJvmBoxTest() {
+  override fun configure(builder: TestConfigurationBuilder) {
+    super.configure(builder)
+    builder.useSourcePreprocessor(::WitherImportsPreprocessor.bind("with"))
+  }
+}
+
+open class AbstractContextJvmBoxTest: WitherJvmBoxTest() {
+  override fun configure(builder: TestConfigurationBuilder) {
+    super.configure(builder)
+    builder.useSourcePreprocessor(::WitherImportsPreprocessor.bind("context"))
+    builder.defaultDirectives { +DISABLE_FIR_DUMP_HANDLER }
   }
 }
