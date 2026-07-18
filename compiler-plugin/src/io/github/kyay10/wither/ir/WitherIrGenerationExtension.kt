@@ -1,6 +1,9 @@
 package io.github.kyay10.wither.ir
 
-import io.github.kyay10.wither.fir.WITH_CALLABLE_ID
+import io.github.kyay10.wither.fir.CALLABLE_IDS
+import io.github.kyay10.wither.fir.CALLABLE_NAMES
+import io.github.kyay10.wither.fir.CONTEXT_CALLABLE_ID
+import io.github.kyay10.wither.fir.HOLDER_NAMES
 import org.jetbrains.kotlin.backend.common.IrElementTransformerVoidWithContext
 import org.jetbrains.kotlin.backend.common.ScopeWithIr
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
@@ -28,49 +31,68 @@ class WitherIrGenerationExtension : IrGenerationExtension {
   }
 }
 
-class ScopeWithWithVariables(scope: Scope, irElement: IrElement) : ScopeWithIr(scope, irElement) {
+class ScopeWithWitherVariables(scope: Scope, irElement: IrElement) : ScopeWithIr(scope, irElement) {
   val withVariables: ArrayDeque<IrVariable> = ArrayDeque()
+  val contextVariables: ArrayDeque<IrVariable> = ArrayDeque()
+}
+
+val ERROR_DESCRIPTIONS = CALLABLE_NAMES.associateBy {
+  "Unresolved reference: this@R|<local>/${HOLDER_NAMES.getValue(it)}|"
 }
 
 class WitherReceiverTransformer : IrElementTransformerVoidWithContext() {
   override fun createScope(declaration: IrSymbolOwner): ScopeWithIr =
-    ScopeWithWithVariables(Scope(declaration.symbol), declaration)
+    ScopeWithWitherVariables(Scope(declaration.symbol), declaration)
 
-  override fun visitContainerExpression(expression: IrContainerExpression) = visitStatementContainer(expression)
+  override fun visitContainerExpression(expression: IrContainerExpression) =
+    visitStatementContainer(expression)
 
-  fun <T : IrStatementContainer> visitStatementContainer(container: T) = withinBlockScope(container) {
-    val iterator = container.statements.listIterator()
-    for (statement in iterator) {
-      val newStatement = statement.transform(this, null)
-      if (newStatement is IrCall && newStatement.symbol.owner.callableId == WITH_CALLABLE_ID) {
-        iterator.remove()
-        val vararg = newStatement.arguments.single() as IrVararg
-        for (arg in vararg.elements) {
-          if (arg !is IrExpression) continue
-          val variable = currentScope!!.scope.createTemporaryVariable(arg)
-          iterator.add(variable)
-          (currentScope!! as ScopeWithWithVariables).withVariables.addFirst(variable)
+  fun <T : IrStatementContainer> visitStatementContainer(container: T) =
+    withinBlockScope(container) {
+      val iterator = container.statements.listIterator()
+      for (statement in iterator) {
+        val newStatement = statement.transform(this, null)
+        if (newStatement is IrCall && newStatement.symbol.owner.callableId in CALLABLE_IDS) {
+          iterator.remove()
+          val vararg = newStatement.arguments.single() as IrVararg
+          for (arg in vararg.elements) {
+            if (arg !is IrExpression) continue
+            val variable = currentScope!!.scope.createTemporaryVariable(arg)
+            iterator.add(variable)
+            if (newStatement.symbol.owner.callableId == CONTEXT_CALLABLE_ID)
+              (currentScope!! as ScopeWithWitherVariables).contextVariables.addFirst(variable)
+            else (currentScope!! as ScopeWithWitherVariables).withVariables.addFirst(variable)
+          }
         }
       }
+      container
     }
-    container
-  }
 
   override fun visitBlockBody(body: IrBlockBody) = visitStatementContainer(body)
 
   override fun visitErrorCallExpression(expression: IrErrorCallExpression): IrExpression {
-    if (expression.description != "Unresolved reference: this@R|<local>/<with receiver holder>|")
-      return super.visitErrorCallExpression(expression)
+    val witherName =
+      ERROR_DESCRIPTIONS[expression.description]
+        ?: return super.visitErrorCallExpression(expression)
 
-    val variable = allScopes.asReversed().asSequence().flatMap { (it as ScopeWithWithVariables).withVariables }.firstOrNull {
-      it.type == expression.type
-    } ?: return super.visitErrorCallExpression(expression)
+    val variable =
+      allScopes
+        .asReversed()
+        .asSequence()
+        .flatMap {
+          if (witherName == CONTEXT_CALLABLE_ID.callableName)
+            (it as ScopeWithWitherVariables).contextVariables
+          else (it as ScopeWithWitherVariables).withVariables
+        }
+        .firstOrNull {
+          it.type == expression.type
+        } ?: return super.visitErrorCallExpression(expression)
     return IrGetValueImpl(expression.startOffset, expression.endOffset, variable.symbol)
   }
 
   private inline fun <T> withinBlockScope(expression: IrStatementContainer, fn: () -> T): T {
     val currentScope = currentScope!!
-    allScopes.push(ScopeWithWithVariables(currentScope.scope, expression))
+    allScopes.push(ScopeWithWitherVariables(currentScope.scope, expression))
     val result = fn()
     unsafeLeaveScope()
     return result

@@ -1,7 +1,7 @@
 FILE: generics.kt
     public final fun box(): R|kotlin/String| {
         R|io/github/kyay10/wither/with|(vararg(String(OK)))
-        ^box context(this@R|<local>/<with receiver holder>|) R|/getString|<R|kotlin/String|>()
+        ^box context(this@R|<local>/<with holder>|) R|/getString|<R|kotlin/String|>()
     }
     context(x: R|T|)
     public final fun <T : R|kotlin/String|> getString(): R|T| {

@@ -37,6 +37,12 @@ import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstance
 
 private val PACKAGE_FQNAME = FqName("io.github.kyay10.wither")
 val WITH_CALLABLE_ID = CallableId(PACKAGE_FQNAME, Name.identifier("with"))
+val CONTEXT_CALLABLE_ID = CallableId(PACKAGE_FQNAME, Name.identifier("context"))
+
+val CALLABLE_IDS = setOf(WITH_CALLABLE_ID, CONTEXT_CALLABLE_ID)
+val CALLABLE_NAMES = CALLABLE_IDS.map { it.callableName }.toSet()
+
+val HOLDER_NAMES = CALLABLE_NAMES.associateWith { Name.special("<$it holder>") }
 
 data object FakeLegacyReceiverKey : FirDeclarationDataKey()
 
@@ -45,28 +51,35 @@ val FirValueParameterSymbol.fakeLegacyReceiver: FirReceiverParameter? by
 var FirValueParameter.fakeLegacyReceiver: FirReceiverParameter? by
   FirDeclarationDataRegistry.data(FakeLegacyReceiverKey)
 
-class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExtension(session) {
+class WitherImplicitValueGenerator(session: FirSession) :
+  FirExpressionResolutionExtension(session) {
   @OptIn(PrivateForInline::class)
   override fun addNewImplicitReceivers(
     functionCall: FirFunctionCall,
     sessionHolder: SessionAndScopeSessionHolder,
     containingCallableSymbol: FirBasedSymbol<*>,
   ): List<ImplicitExtensionReceiverValue> {
-    if (functionCall.calleeReference.resolved?.resolvedSymbol == withSymbol) {
+    val reference = functionCall.calleeReference.resolved ?: return emptyList()
+    val calleeSymbol = reference.resolvedSymbol
+    if (calleeSymbol in symbols) {
       val vararg = functionCall.argument as? FirVarargArgumentsExpression ?: return emptyList()
       val fakeValueParam = buildValueParameter {
         resolvePhase = FirResolvePhase.BODY_RESOLVE
         moduleData = session.moduleData
         origin = GeneratedReceiverFromWithKey.origin
         symbol = FirValueParameterSymbol()
-        containingDeclarationSymbol = withSymbol
+        containingDeclarationSymbol = calleeSymbol
         returnTypeRef = session.builtinTypes.anyType
-        name = Name.special("<with receiver holder>")
+        name =
+          HOLDER_NAMES.getValue(
+            if (calleeSymbol == contextSymbol) CONTEXT_CALLABLE_ID.callableName
+            else WITH_CALLABLE_ID.callableName
+          )
       }
-      val contextParameters =
+      val receiverParams =
         vararg.arguments.map {
           val type = it.resolvedType
-          val receiverParameter = buildReceiverParameter {
+          buildReceiverParameter {
             resolvePhase = FirResolvePhase.BODY_RESOLVE
             moduleData = session.moduleData
             origin = GeneratedReceiverFromWithKey.origin
@@ -76,30 +89,41 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
               coneType = type
             }
           }
-          buildValueParameter {
-            resolvePhase = FirResolvePhase.BODY_RESOLVE
-            moduleData = session.moduleData
-            origin = GeneratedReceiverFromWithKey.origin
-            symbol = FirValueParameterSymbol()
-            name = Name.special("<with receiver itself>")
-            containingDeclarationSymbol = fakeValueParam.symbol
-            returnTypeRef = buildResolvedTypeRef { coneType = type }
-            valueParameterKind = FirValueParameterKind.ContextParameter
-          }
-            .apply { fakeLegacyReceiver = receiverParameter }
         }
-      sessionHolder as FirAbstractBodyResolveTransformer.BodyResolveTransformerComponents
-      val bodyResolveContext = sessionHolder.context
-      bodyResolveContext.replaceTowerDataContext(
-        bodyResolveContext.towerDataContext.addContextGroups(
-          contextParameters.map {
-            ImplicitContextParameterValue(
-              boundSymbol = it.symbol,
-              type = it.returnTypeRef.coneType,
-            )
-          }
+      if (calleeSymbol == contextSymbol) {
+        sessionHolder as FirAbstractBodyResolveTransformer.BodyResolveTransformerComponents
+        val bodyResolveContext = sessionHolder.context
+        bodyResolveContext.replaceTowerDataContext(
+          bodyResolveContext.towerDataContext.addContextGroups(
+            receiverParams.map {
+              val valueParam = buildValueParameter {
+                resolvePhase = FirResolvePhase.BODY_RESOLVE
+                moduleData = session.moduleData
+                origin = GeneratedReceiverFromWithKey.origin
+                symbol = FirValueParameterSymbol()
+                name = Name.special("<context parameter itself>")
+                containingDeclarationSymbol = fakeValueParam.symbol
+                returnTypeRef = buildResolvedTypeRef { coneType = it.typeRef.coneType }
+                valueParameterKind = FirValueParameterKind.ContextParameter
+              }
+                .apply { fakeLegacyReceiver = it }
+              ImplicitContextParameterValue(
+                boundSymbol = valueParam.symbol,
+                type = it.typeRef.coneType,
+              )
+            }
+          )
         )
-      )
+      } else {
+        return receiverParams.map {
+          ImplicitExtensionReceiverValue(
+            it.symbol,
+            it.typeRef.coneType,
+            sessionHolder.session,
+            sessionHolder.scopeSession,
+          )
+        }
+      }
     }
     return emptyList()
   }
@@ -111,4 +135,10 @@ class WitherReceiverGenerator(session: FirSession) : FirExpressionResolutionExte
       .getTopLevelCallableSymbols(WITH_CALLABLE_ID.packageName, WITH_CALLABLE_ID.callableName)
       .firstIsInstance<FirFunctionSymbol<*>>()
   }
+  private val contextSymbol by lazy {
+    session.symbolProvider
+      .getTopLevelCallableSymbols(CONTEXT_CALLABLE_ID.packageName, CONTEXT_CALLABLE_ID.callableName)
+      .firstIsInstance<FirFunctionSymbol<*>>()
+  }
+  private val symbols by lazy { setOf(withSymbol, contextSymbol) }
 }

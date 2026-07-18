@@ -58,7 +58,7 @@ object WitherContextArgumentCleanerTransformer : FirDefaultTransformer<Unit>() {
       val symbol = reference.resolvedSymbol as? FirValueParameterSymbol ?: return@default
       if (
         (symbol.origin as? FirDeclarationOrigin.Plugin)?.key !=
-          WitherReceiverGenerator.GeneratedReceiverFromWithKey
+          WitherImplicitValueGenerator.GeneratedReceiverFromWithKey
       )
         return@default
       val fakeReceiver = symbol.fakeLegacyReceiver ?: return@default

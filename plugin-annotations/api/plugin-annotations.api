@@ -1,4 +1,5 @@
 public final class io/github/kyay10/wither/WithKt {
+	public static final fun context ([Ljava/lang/Object;)V
 	public static final fun with ([Ljava/lang/Object;)V
 }
 
