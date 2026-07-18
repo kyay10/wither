@@ -5,11 +5,12 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
   kotlin("multiplatform")
   id("module.publication")
-  id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 kotlin {
   explicitApi()
+  @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+  abiValidation()
 
   androidNativeArm32()
   androidNativeArm64()
@@ -29,13 +30,11 @@ kotlin {
   linuxX64()
 
   macosArm64()
-  macosX64()
 
   mingwX64()
 
   tvosArm64()
   tvosSimulatorArm64()
-  tvosX64()
 
   wasmJs().nodejs()
   wasmWasi().nodejs()
@@ -44,19 +43,6 @@ kotlin {
   watchosArm64()
   watchosDeviceArm64()
   watchosSimulatorArm64()
-  watchosX64()
 
   applyDefaultHierarchyTemplate()
-}
-
-publishing {
-  publications {
-    withType<MavenPublication> {
-      // Stub javadoc.jar artifact
-      artifact(tasks.register("${name}JavadocJar", Jar::class) {
-        archiveClassifier.set("javadoc")
-        archiveAppendix.set(this@withType.name)
-      })
-    }
-  }
 }

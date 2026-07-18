@@ -49,7 +49,7 @@ gradlePlugin {
       id = rootProject.group.toString()
       displayName = "Wither"
       description =
-        "A Kotlin Compiler Plugin that allows local `with` calls, so that adding receivers doesn't result in deeply nested code. This is especially important with context parameters."
+        "A Kotlin Compiler Plugin that allows local `with` and `context` calls, so that adding receivers doesn't result in deeply nested code. This is especially important with context parameters."
       tags = listOf("kotlin-compiler-plugin")
       implementationClass = "io.github.kyay10.wither.WitherGradlePlugin"
     }

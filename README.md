@@ -7,7 +7,7 @@ Did you end up with code that looks like this?
 
 ```kotlin
 context(Foo, Bar, Baz) {
-  ...
+  // ...
   if (someCondition) {
     context(A, B) {
       context(makeCFromAandB()) {
@@ -25,7 +25,7 @@ Introducinnnnng, Wither!
 Your code can be flattened down to look like this instead:
 ```kotlin
 context(Foo, Bar, Baz)
-...
+// ...
 if (someCondition) {
   context(A, B)
   context(makeCFromAandB())
@@ -53,7 +53,7 @@ println(contextOf<String>()) // prints "Low"
 Try it out today! All it takes is just:
 ```kotlin
 plugins {
-  id("io.github.kyay10.wither) version "0.0.1"
+  id("io.github.kyay10.wither") version "0.0.2"
 }
 ```
 and simply import `io.github.kyay10.wither.with` or `io.github.kyay10.wither.context`

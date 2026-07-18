@@ -104,17 +104,3 @@ fun Test.setLibraryProperty(propName: String, jarName: String) {
     ?: return
   systemProperty(propName, path)
 }
-
-java {
-  withSourcesJar()
-  withJavadocJar()
-}
-
-publishing {
-  publications {
-    create<MavenPublication>("maven") {
-      artifactId = "compiler-plugin"
-      from(components["java"])
-    }
-  }
-}
