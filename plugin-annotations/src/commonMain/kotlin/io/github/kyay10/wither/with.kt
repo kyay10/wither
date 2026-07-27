@@ -19,6 +19,9 @@ public class Contexts(private val values: Array<out Any?>) {
 context(c: Contexts)
 public fun <T> getContextHere(index: Int): T = c[index]
 
+public val insertContextCallHere: Unit
+  get() = Unit
+
 @OptIn(ExperimentalContracts::class)
 public inline fun contexts(vararg values: Any?, block: context(Contexts) () -> Unit) {
   contract {

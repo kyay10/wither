@@ -1,5 +1,6 @@
 package io.github.kyay10.wither
 
+import io.github.kyay10.wither.fir.WitherAssignmentAlterer
 import io.github.kyay10.wither.fir.WitherCallInjector
 import io.github.kyay10.wither.fir.WitherContextArgumentCleaner
 import io.github.kyay10.wither.fir.WitherImplicitValueGenerator
@@ -12,5 +13,6 @@ class WitherPluginRegistrar : FirExtensionRegistrar() {
     +::WitherImplicitValueGenerator
     +::WitherCallInjector
     +::WitherContextArgumentCleaner
+    +::WitherAssignmentAlterer
   }
 }
