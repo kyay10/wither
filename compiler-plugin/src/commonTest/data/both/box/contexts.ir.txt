@@ -1,0 +1,19 @@
+FILE fqName:<root> fileName:/contexts.kt
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      CALL 'public final fun contexts (vararg values: kotlin.Any?, block: @[ContextFunctionTypeParams(count = 1)] kotlin.Function1<io.github.kyay10.wither.Contexts, kotlin.Unit>): kotlin.Unit declared in io.github.kyay10.wither' type=kotlin.Unit origin=null
+        ARG values: VARARG type=kotlin.Array<out kotlin.Any?> varargElementType=kotlin.Any?
+          CONST String type=kotlin.String value="OK"
+        ARG block: FUN_EXPR type=kotlin.Function1<io.github.kyay10.wither.Contexts, kotlin.Unit> origin=LAMBDA
+          FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.Unit
+            VALUE_PARAMETER UNDERSCORE_PARAMETER kind:Context name:$context-Contexts index:0 type:io.github.kyay10.wither.Contexts
+            BLOCK_BODY
+              VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.String [val]
+                CALL 'public final fun getContextHere <T> (c: io.github.kyay10.wither.Contexts, index: kotlin.Int): T of io.github.kyay10.wither.getContextHere declared in io.github.kyay10.wither' type=kotlin.String origin=null
+                  TYPE_ARG T: kotlin.String
+                  ARG c: GET_VAR '$context-Contexts: io.github.kyay10.wither.Contexts declared in <root>.box.<anonymous>' type=io.github.kyay10.wither.Contexts origin=null
+                  ARG index: CONST Int type=kotlin.Int value=0
+              RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+                CALL 'public final fun contextOf <A> (context: @[NoInfer] A of kotlin.contextOf): @[NoInfer] A of kotlin.contextOf declared in kotlin' type=@[NoInfer] kotlin.String origin=null
+                  TYPE_ARG A: kotlin.String
+                  ARG context: GET_VAR 'val tmp_0: kotlin.String declared in <root>.box.<anonymous>' type=kotlin.String origin=null

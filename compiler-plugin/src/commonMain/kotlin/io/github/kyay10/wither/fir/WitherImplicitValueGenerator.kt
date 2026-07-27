@@ -40,7 +40,7 @@ import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.util.PrivateForInline
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstance
 
-private val PACKAGE_FQNAME = FqName("io.github.kyay10.wither")
+val PACKAGE_FQNAME = FqName("io.github.kyay10.wither")
 val WITH_CALLABLE_ID = CallableId(PACKAGE_FQNAME, Name.identifier("with"))
 val CONTEXT_CALLABLE_ID = CallableId(PACKAGE_FQNAME, Name.identifier("context"))
 

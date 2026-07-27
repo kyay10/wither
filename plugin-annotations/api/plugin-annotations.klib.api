@@ -8,3 +8,4 @@
 // Library unique name: <io.github.kyay10.wither:plugin-annotations>
 final fun io.github.kyay10.wither/context(kotlin/Array<out kotlin/Any?>...) // io.github.kyay10.wither/context|context(kotlin.Array<out|kotlin.Any?>...){}[0]
 final fun io.github.kyay10.wither/with(kotlin/Array<out kotlin/Any?>...) // io.github.kyay10.wither/with|with(kotlin.Array<out|kotlin.Any?>...){}[0]
+final inline fun io.github.kyay10.wither/contexts(kotlin/Array<out kotlin/Any?>..., kotlin/Function1<kotlin/Array<out kotlin/Any?>, kotlin/Unit>) // io.github.kyay10.wither/contexts|contexts(kotlin.Array<out|kotlin.Any?>...;kotlin.Function1<kotlin.Array<out|kotlin.Any?>,kotlin.Unit>){}[0]

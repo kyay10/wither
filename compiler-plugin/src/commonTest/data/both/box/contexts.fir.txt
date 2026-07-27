@@ -1,0 +1,8 @@
+FILE: contexts.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/contexts|(vararg(String(OK)), <L> = context(<unused var>: R|io/github/kyay10/wither/Contexts|) contexts@fun <anonymous>(): R|kotlin/Unit| <inline=Inline, kind=EXACTLY_ONCE>  {
+            Q|io/github/kyay10/wither|.R|io/github/kyay10/wither/context|(vararg(context(R|<local>/<unused var>|) Q|io/github/kyay10/wither|.R|io/github/kyay10/wither/getContextHere|<R|kotlin/String|>(Int(0))))
+            ^box context(this@R|<local>/<context holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+        }
+        )
+    }
