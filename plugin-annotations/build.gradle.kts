@@ -1,6 +1,7 @@
 @file:OptIn(ExperimentalWasmDsl::class)
 
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
   kotlin("multiplatform")
@@ -9,8 +10,7 @@ plugins {
 
 kotlin {
   explicitApi()
-  @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
-  abiValidation()
+  @OptIn(ExperimentalAbiValidation::class) abiValidation()
 
   androidNativeArm32()
   androidNativeArm64()

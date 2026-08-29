@@ -3,6 +3,11 @@ kotlin = "2.4.10"
 buildconfig = "6.0.10"
 gradle-plugin-publish = "2.1.1"
 gradle-maven-publish-plugin = "0.37.0"
+spotless = "8.8.0"
+ktfmt = "0.64"
+
+[plugins]
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]
 gradle-maven-publish-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "gradle-maven-publish-plugin" }
