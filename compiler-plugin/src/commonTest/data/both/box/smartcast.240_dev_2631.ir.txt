@@ -1,0 +1,21 @@
+FILE fqName:<root> fileName:/smartcast.kt
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      VAR IR_TEMPORARY_VARIABLE name:tmp_0 type:kotlin.Any [val]
+        TYPE_OP type=kotlin.Any origin=CAST typeOperand=kotlin.Any
+          CONST String type=kotlin.String value="OK"
+      CALL 'public final fun smartCastContext (x: kotlin.Any): kotlin.Unit declared in <root>' type=kotlin.Unit origin=null
+        ARG x: GET_VAR 'val tmp_0: kotlin.Any declared in <root>.box' type=kotlin.Any origin=null
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in <root>'
+        CALL 'public final fun contextOf <A> (context: @[NoInfer] A of kotlin.contextOf): @[NoInfer] A of kotlin.contextOf declared in kotlin' type=@[NoInfer] kotlin.String origin=null
+          TYPE_ARG A: kotlin.String
+          ARG context: TYPE_OP type=kotlin.String origin=IMPLICIT_CAST typeOperand=kotlin.String
+            GET_VAR 'val tmp_0: kotlin.Any declared in <root>.box' type=kotlin.Any origin=null
+  FUN name:smartCastContext visibility:public modality:FINAL returnType:kotlin.Unit
+    VALUE_PARAMETER kind:Context name:x index:0 type:kotlin.Any
+    annotations:
+      OptIn(markerClass = [CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalContracts modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.contracts.ExperimentalContracts>] type=kotlin.Array<out kotlin.reflect.KClass<out kotlin.Annotation>> varargElementType=kotlin.reflect.KClass<out kotlin.Annotation>)
+    BLOCK_BODY
+      TYPE_OP type=kotlin.Unit origin=IMPLICIT_COERCION_TO_UNIT typeOperand=kotlin.Unit
+        TYPE_OP type=kotlin.String origin=CAST typeOperand=kotlin.String
+          GET_VAR 'x: kotlin.Any declared in <root>.smartCastContext' type=kotlin.Any origin=null

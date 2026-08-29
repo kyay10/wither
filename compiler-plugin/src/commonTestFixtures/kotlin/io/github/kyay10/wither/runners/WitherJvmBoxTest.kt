@@ -6,10 +6,17 @@ import org.jetbrains.kotlin.compiler.plugin.devkit.runners.DevKitJvmBoxTest
 import org.jetbrains.kotlin.compiler.plugin.devkit.services.configurePlugin
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.DISABLE_FIR_DUMP_HANDLER
+import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.LANGUAGE
 import org.jetbrains.kotlin.utils.bind
 
 open class WitherJvmBoxTest(vararg config: TestConfigurationBuilder.() -> Unit) :
-  DevKitJvmBoxTest({ configurePlugin(WitherPluginComponentRegistrar()) }, *config)
+  DevKitJvmBoxTest(
+    {
+      configurePlugin(WitherPluginComponentRegistrar())
+      defaultDirectives { LANGUAGE with "+ContextParameters" }
+    },
+    *config,
+  )
 
 open class AbstractWithJvmBoxTest :
   WitherJvmBoxTest({ useSourcePreprocessor(::WitherImportsPreprocessor.bind("with")) })

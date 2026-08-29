@@ -6,10 +6,17 @@ import org.jetbrains.kotlin.compiler.plugin.devkit.runners.DevKitJvmDiagnosticTe
 import org.jetbrains.kotlin.compiler.plugin.devkit.services.configurePlugin
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.DISABLE_FIR_DUMP_HANDLER
+import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.LANGUAGE
 import org.jetbrains.kotlin.utils.bind
 
 open class WitherJvmDiagnosticTest(vararg config: TestConfigurationBuilder.() -> Unit) :
-  DevKitJvmDiagnosticTest({ configurePlugin(WitherPluginComponentRegistrar()) }, *config)
+  DevKitJvmDiagnosticTest(
+    {
+      configurePlugin(WitherPluginComponentRegistrar())
+      defaultDirectives { LANGUAGE with "+ContextParameters" }
+    },
+    *config,
+  )
 
 open class AbstractWithJvmDiagnosticTest :
   WitherJvmDiagnosticTest({ useSourcePreprocessor(::WitherImportsPreprocessor.bind("with")) })
