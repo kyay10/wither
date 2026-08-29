@@ -19,7 +19,7 @@ jobs:
           java-version: 25
 
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew build --continue
+      - run: ./gradlew check --continue
 
       - uses: mikepenz/action-junit-report@v5
         if: success() || failure()
