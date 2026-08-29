@@ -1,0 +1,12 @@
+FILE: conditionals2.kt
+    public final fun box(): R|kotlin/String| {
+        R|io/github/kyay10/wither/context|(vararg(String(NO), Int(0)))
+        when () {
+            Boolean(true) ->  {
+                R|io/github/kyay10/wither/context|(vararg(String(OK), Int(42)))
+                ^box context(this@R|<local>/<context holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+            }
+        }
+
+        ^box context(this@R|<local>/<context holder>|) R|kotlin/contextOf|<R|kotlin/String|>()
+    }

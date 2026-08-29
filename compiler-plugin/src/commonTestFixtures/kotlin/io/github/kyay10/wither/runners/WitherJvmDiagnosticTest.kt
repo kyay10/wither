@@ -2,10 +2,10 @@ package io.github.kyay10.wither.runners
 
 import io.github.kyay10.wither.WitherPluginComponentRegistrar
 import io.github.kyay10.wither.services.WitherImportsPreprocessor
+import org.jetbrains.kotlin.compiler.plugin.devkit.TestDumpDirectives.DUMP_CLASSIFIER
 import org.jetbrains.kotlin.compiler.plugin.devkit.runners.DevKitJvmDiagnosticTest
 import org.jetbrains.kotlin.compiler.plugin.devkit.services.configurePlugin
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
-import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.DISABLE_FIR_DUMP_HANDLER
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.LANGUAGE
 import org.jetbrains.kotlin.utils.bind
 
@@ -24,5 +24,5 @@ open class AbstractWithJvmDiagnosticTest :
 open class AbstractContextJvmDiagnosticTest :
   WitherJvmDiagnosticTest({
     useSourcePreprocessor(::WitherImportsPreprocessor.bind("context"))
-    defaultDirectives { +DISABLE_FIR_DUMP_HANDLER }
+    defaultDirectives { DUMP_CLASSIFIER with ContextParametersClassifier.classifier }
   })
